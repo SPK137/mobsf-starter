@@ -1,0 +1,13 @@
+name: mobsf-starter
+version: 0.0.1
+
+authors:
+  - SPK137 <o.sippakorn@gmail.com>
+
+targets:
+  mobsf:
+    main: src/mobsf.cr
+
+crystal: 1.7.2
+
+license: MIT
