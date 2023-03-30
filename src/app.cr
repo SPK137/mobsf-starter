@@ -13,7 +13,8 @@ module MobSFStarter
     DYNAMIC = "dynamic"
   end
 
-  getter install_mob_dep_cmd
+  getter install_mob_static_dep_cmd
+  getter install_mob_dynamic_dep_cmd
   getter install_mob_framework_cmd
   getter update_mob_framework_cmd
   getter stdout
@@ -21,7 +22,8 @@ module MobSFStarter
 
   class App
     def initialize(cmd = "yarn", @stdin : IO = STDIN, @stdout : IO = STDOUT, @stderr : IO = STDERR, next_opts = [] of String)
-      @install_mob_dep_cmd = InstallMobDepCommand.new(cmd, next_opts, input: @stdin, output: @stdout, error: @stderr)
+      @install_mob_static_dep_cmd = InstallMobStaticDepCommand.new(cmd, next_opts, input: @stdin, output: @stdout, error: @stderr)
+      @install_mob_dynamic_dep_cmd = InstallMobDynamicDepCommand.new(cmd, next_opts, input: @stdin, output: @stdout, error: @stderr)
       @install_mob_framework_cmd = InstallMobFrameworkCommand.new(cmd, next_opts, input: @stdin, output: @stdout, error: @stderr)
       @update_mob_framework_cmd = UpdateMobFrameworkCommand.new(cmd, next_opts, input: @stdin, output: @stdout, error: @stderr)
     end

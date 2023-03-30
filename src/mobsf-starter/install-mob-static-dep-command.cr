@@ -2,7 +2,7 @@ require "./command-protocol"
 require "option_parser"
 
 module MobSFStarter
-  class InstallMobDepCommand
+  class InstallMobStaticDepCommand
     include CommandProtocol
 
     getter cmd
@@ -51,7 +51,7 @@ module MobSFStarter
       otherDepStatus = Process.run("sudo apt install python3-dev python3-venv python3-pip build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf ", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : Other dependencies") unless otherDepStatus.success?
 
-      STDOUT.puts "Dependencies for MobSF installed!"
+      STDOUT.puts "Dependencies for MobSF's Static Analysis installed!"
     end
   end
 end
