@@ -26,6 +26,8 @@
 .AppleDouble
 .LSOverride
 .tool-versions
+cmdline-tools
+android_cl.zip
 
 # Icon must end with two \r
 Icon
