@@ -27,3 +27,14 @@ crystal run ./src/mobsf.cr update
 crystal run ./src/mobsf.cr -h
 ```
 
+## Usage
+
+### Linux
+
+- In case the binary cannot be run, run the following command before running the binary
+
+```
+sudo apt-get install libevent-2.1
+```
+
+
