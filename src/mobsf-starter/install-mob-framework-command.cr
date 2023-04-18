@@ -40,7 +40,6 @@ module MobSFStarter
       Dir.cd("../")
 
       STDOUT.puts "MobSF Framework successfully installed!"
-      STDOUT.puts "To start MobSF server, run :./run.sh 127.0.0.1:8000"
     end
   end
 end

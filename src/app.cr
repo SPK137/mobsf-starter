@@ -94,6 +94,7 @@ module MobSFStarter
         opts.parse
 
         if setup
+          @stdout.puts %[======================================\n     Scandina Extension for MobSF     \n======================================]
           setup_mobsf(setup_type, dry_run)
 
           @stdout.puts "Done setting up MobSF! "
