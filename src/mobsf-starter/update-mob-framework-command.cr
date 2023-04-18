@@ -37,7 +37,7 @@ module MobSFStarter
       deactivateStatus = Process.run("deactivate", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : deactivate venv") unless activateStatus.success?
 
-      STDOUT.puts "MobSF Framework successfully installed!"
+      STDOUT.puts "MobSF Framework successfully updated!"
     end
   end
 end

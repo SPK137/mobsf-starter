@@ -6,11 +6,11 @@ require "./mobsf-starter"
 module MobSFStarter
   VERSION = "0.7.0"
 
-  CREATE_BANNER = "Usage: mobsf install [ -t --install_type ] [ -d ] [ -h ] [ -v ]"
+  CREATE_BANNER = "Usage: mobsf setup [ -t --setup-type ] [ -h ] [ -v ]"
 
   module InstallType
-    STATIC  = "static"
-    DYNAMIC = "dynamic"
+    STATIC_ONLY  = "static"
+    WITH_DYNAMIC = "dynamic"
   end
 
   getter install_mob_static_dep_cmd
@@ -37,6 +37,11 @@ module MobSFStarter
       opts = OptionParser.new do |opts|
         opts.banner = "MobSF Installer App"
 
+        opts.on "", "" do
+          @stdout.puts opts
+          exit
+        end
+
         opts.on "-v", "--version", "Show version" do
           @stdout.puts VERSION
           exit
@@ -51,12 +56,10 @@ module MobSFStarter
           setup = true
           opts.banner = CREATE_BANNER
 
-          opts.on "-d", "--dry-run", "Create only empty dir" do
-            dry_run = true
-          end
-
-          opts.on "-t SETUP_TYPE", "--setup-type=SETUP_TYPE", "Setup type to perform [ static, dynamic ]. Will setup dependencies for basic MobSF Framework if omitted" do |_setup_type|
-            if _setup_type != InstallType::STATIC
+          opts.on "-t SETUP_TYPE", "--setup-type=SETUP_TYPE",
+            "Setup type to perform [ static, dynamic ] \n- static setup: install dependencies for static analysis \n- dynamic setup: install dependencies for both static and dynamic analysis \nWill setup only dependencies for MobSF Framework's static analysis if omitted
+            " do |_setup_type|
+            if _setup_type != InstallType::STATIC_ONLY && _setup_type != InstallType::WITH_DYNAMIC
               @stderr.puts "Invalid setup type: #{_setup_type}: [ static, dynamic ]"
               exit 1
             end
@@ -94,11 +97,13 @@ module MobSFStarter
           setup_mobsf(setup_type, dry_run)
 
           @stdout.puts "Done setting up MobSF! "
-        end
-
-        if update
-          update_mobsf()
-          @stdout.puts "Done updating MobSF!"
+        else
+          if update
+            update_mobsf()
+            @stdout.puts "Done updating MobSF!"
+          else
+            @stdout.puts opts
+          end
         end
       rescue ex
         puts "ERROR: #{ex.message}"
@@ -108,16 +113,20 @@ module MobSFStarter
     end
 
     private def setup_mobsf(setup_type, dry_run)
-      if setup_type == InstallType::STATIC || setup_type == ""
-        @install_mob_dep_cmd.call(ARGV)
+      @install_mob_static_dep_cmd.call(ARGV)
 
-        @install_mob_framework_cmd.call(ARGV)
+      if setup_type == InstallType::WITH_DYNAMIC
+        @install_mob_dynamic_dep_cmd.call(ARGV)
+      end
 
-        update_mobsf()
+      @install_mob_framework_cmd.call(ARGV)
 
-        if setup_type == ""
-          Dir.cd("../")
-        end
+      update_mobsf()
+
+      STDOUT.puts %[To run MobSF, navigate to Mobile-Security-Framework-MobSF folder and run "./run.sh 127.0.0.1:8000"]
+
+      if setup_type == ""
+        Dir.cd("../")
       end
     end
 

@@ -20,21 +20,27 @@ module MobSFStarter
       STDOUT.puts "Cloning MobSF Repo..."
       STDOUT.puts "------------------------------------"
 
-      cloneStatus = Process.run("git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git", shell: true, input: STDIN, output: STDOUT, error: STDERR)
-      raise Exception.new("Error installing MobSF depedencies : Cloning MobSF Repo") unless cloneStatus.success?
+      if !File.exists?("Mobile-Security-Framework-MobSF")
+        cloneStatus = Process.run("git clone https://github.com/MobSF/Mobile-Security-Framework-MobSF.git", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+        raise Exception.new("Error installing MobSF depedencies : Cloning MobSF Repo") unless cloneStatus.success?
+      end
 
       STDOUT.puts "------------------------------------"
       STDOUT.puts "Installing MobSF"
       STDOUT.puts "------------------------------------"
 
       Dir.cd("Mobile-Security-Framework-MobSF")
-      
-      WsetupStatus = Process.run("./setup.sh", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+
+      requirementInstallStatus = Process.run("pip install --no-cache-dir --use-deprecated=legacy-resolver -r requirements.txt", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      raise Exception.new("Error installing MobSF depedencies : Installing MobSF Required Python Packages") unless requirementInstallStatus.success?
+
+      setupStatus = Process.run("./setup.sh", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : Running setup script") unless setupStatus.success?
 
       Dir.cd("../")
 
       STDOUT.puts "MobSF Framework successfully installed!"
+      STDOUT.puts "To start MobSF server, run :./run.sh 127.0.0.1:8000"
     end
   end
 end
