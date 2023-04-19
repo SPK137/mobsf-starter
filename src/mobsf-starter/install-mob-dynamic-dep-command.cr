@@ -50,12 +50,10 @@ module MobSFStarter
       STDOUT.puts "Setting Environment Variables"
       STDOUT.puts "----------------------------------------"
 
-      if File.exists?("~/.bashrc")
-        Process.run("sed -i 's#export ANDROID_SDK_ROOT=#{android_cl_linux_install_loc}##' ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
-        Process.run("sed -i 's#export ANDROID_HOME=#{android_cl_linux_install_loc}##' ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
-        Process.run("sed -i 's#export MOBSF_ADB_BINARY=#{android_cl_linux_install_loc}/platform-tools/adb##' ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
-        Process.run("sed -i 's#export PATH=$PATH:#{android_cl_linux_install_loc}/emulator:#{android_cl_linux_install_loc}/platform-tools:#{android_cl_linux_install_loc}/cmdline-tools/tools/bin##' ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
-      end
+      Process.run("sed -i 's#export ANDROID_SDK_ROOT=#{android_cl_linux_install_loc}##' ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      Process.run("sed -i 's#export ANDROID_HOME=#{android_cl_linux_install_loc}##' ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      Process.run("sed -i 's#export MOBSF_ADB_BINARY=#{android_cl_linux_install_loc}/platform-tools/adb##' ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      Process.run("sed -i 's#export PATH=$PATH:#{android_cl_linux_install_loc}/emulator:#{android_cl_linux_install_loc}/platform-tools:#{android_cl_linux_install_loc}/cmdline-tools/tools/bin##' ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
 
       Process.run("echo 'export ANDROID_SDK_ROOT=#{android_cl_linux_install_loc}' >> ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       Process.run("echo 'export ANDROID_HOME=#{android_cl_linux_install_loc}' >> ~/.bashrc", shell: true, input: STDIN, output: STDOUT, error: STDERR)
