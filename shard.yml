@@ -5,7 +5,7 @@ authors:
   - SPK137 <o.sippakorn@gmail.com>
 
 targets:
-  mobsf:
+  mobsf-installer:
     main: src/mobsf.cr
 
 crystal: 1.7.2
