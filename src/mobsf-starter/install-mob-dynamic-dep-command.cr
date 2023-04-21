@@ -75,7 +75,7 @@ module MobSFStarter
       STDOUT.puts "Create a AVD device..."
       STDOUT.puts "----------------------------------------"
 
-      createAVDStatus = Process.run(%[sudo #{android_cl_linux_install_loc}/cmdline-tools/tools/bin/avdmanager create avd --force --name MobSF_Android --package "system-images;android-28;default;x86"], shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      createAVDStatus = Process.run(%[avdmanager create avd --force --name MobSF_Android --package "system-images;android-28;default;x86"], shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : Download Platform Specific Packages") unless createAVDStatus.success?
 
       STDOUT.puts "Dependencies for MobSF's Dynamic Analysis installed!"
