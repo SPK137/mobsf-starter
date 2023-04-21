@@ -6,11 +6,11 @@ require "./mobsf-starter"
 module MobSFStarter
   VERSION = "0.7.0"
 
-  CREATE_BANNER = "Usage: mobsf setup [ -t --setup-type ] [ -h ] [ -v ]"
+  SETUP_BANNER = "Usage: mobsf setup [ -t --setup-type ] [ -h ] [ -v ]"
 
   module InstallType
     STATIC_ONLY  = "static"
-    WITH_DYNAMIC = "dynamic"
+    WITH_DYNAMIC = "all"
   end
 
   getter install_mob_static_dep_cmd
@@ -54,13 +54,13 @@ module MobSFStarter
 
         opts.on "setup", "Setup MobSF" do
           setup = true
-          opts.banner = CREATE_BANNER
+          opts.banner = SETUP_BANNER
 
           opts.on "-t SETUP_TYPE", "--setup-type=SETUP_TYPE",
-            "Setup type to perform [ static, dynamic ] \n- static setup: install dependencies for static analysis \n- dynamic setup: install dependencies for both static and dynamic analysis \nWill setup only dependencies for MobSF Framework's static analysis if omitted
+            "Setup type to perform [ static, all ] \n- static setup: install dependencies for static analysis \n- all setup: install dependencies for both static and dynamic analysis
             " do |_setup_type|
             if _setup_type != InstallType::STATIC_ONLY && _setup_type != InstallType::WITH_DYNAMIC
-              @stderr.puts "Invalid setup type: #{_setup_type}: [ static, dynamic ]"
+              @stderr.puts "Invalid setup type: #{_setup_type}: [ static, all ]"
               exit 1
             end
 
@@ -73,8 +73,8 @@ module MobSFStarter
         end
 
         opts.missing_option do |option_flag|
-          if option_flag == "-i" || option_flag == "--ip"
-            @stderr.puts "ERROR: #{option_flag} is missing IP address."
+          if option_flag == "-t" || option_flag == "--setup-type"
+            @stderr.puts "ERROR: #{option_flag} is missing the setup type."
           else
             @stderr.puts "ERROR: #{option_flag} is missing something."
           end
@@ -95,7 +95,7 @@ module MobSFStarter
 
         if setup
           @stdout.puts %[======================================\n     Scandina Extension for MobSF     \n======================================]
-          setup_mobsf(setup_type, dry_run)
+          setup_mobsf(setup_type)
 
           @stdout.puts "Done setting up MobSF! "
         else
@@ -113,7 +113,7 @@ module MobSFStarter
       end
     end
 
-    private def setup_mobsf(setup_type, dry_run)
+    private def setup_mobsf(setup_type)
       @install_mob_static_dep_cmd.call(ARGV)
 
       if setup_type == InstallType::WITH_DYNAMIC
