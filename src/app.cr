@@ -93,6 +93,12 @@ module MobSFStarter
       begin
         opts.parse
 
+        if setup_type != InstallType::STATIC_ONLY && setup_type != InstallType::WITH_DYNAMIC
+          @stderr.puts "Please choose setup type: [ static, all ]"
+          @stderr.puts "For more information, run: mobsf-installer setup --help"
+          exit 1
+        end
+
         if setup
           @stdout.puts %[======================================\n     Scandina Extension for MobSF     \n======================================]
           setup_mobsf(setup_type)
