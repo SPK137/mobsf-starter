@@ -27,28 +27,28 @@ module MobSFStarter
       STDOUT.puts "Installing Git..."
       STDOUT.puts "------------------------------------"
 
-      gitStatus = Process.run("sudo apt-get install git", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      gitStatus = Process.run("sudo apt-get -y install git", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : Git") unless gitStatus.success?
 
       STDOUT.puts "------------------------------------"
       STDOUT.puts "Installing Python 3..."
       STDOUT.puts "------------------------------------"
 
-      pythonStatus = Process.run("sudo apt-get install python3 python-is-python3", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      pythonStatus = Process.run("sudo apt-get -y install python3 python-is-python3", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : Python 3") unless pythonStatus.success?
 
       STDOUT.puts "------------------------------------"
       STDOUT.puts "Installing JDK 8..."
       STDOUT.puts "------------------------------------"
 
-      jdkStatus = Process.run("sudo apt-get install openjdk-8-jdk", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      jdkStatus = Process.run("sudo apt-get -y install openjdk-8-jdk", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : JDK 8") unless jdkStatus.success?
 
       STDOUT.puts "------------------------------------"
       STDOUT.puts "Installing Other Libraries..."
       STDOUT.puts "------------------------------------"
 
-      otherDepStatus = Process.run("sudo apt install python3-dev python3-venv python3-pip build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf ", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      otherDepStatus = Process.run("sudo apt -y install python3-dev python3-venv python3-pip build-essential libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev wkhtmltopdf ", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : Other dependencies") unless otherDepStatus.success?
 
       STDOUT.puts "Dependencies for MobSF's Static Analysis installed!"
