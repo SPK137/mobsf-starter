@@ -132,6 +132,10 @@ module MobSFStarter
 
       STDOUT.puts %[To run MobSF, navigate to Mobile-Security-Framework-MobSF folder and run "./run.sh 127.0.0.1:8000"]
 
+      if setup_type == InstallType::WITH_DYNAMIC
+        STDOUT.puts %[To run dynamic analysis, run "emulator @MobSF_Android -writable-system -no-snapshot" to start emulator before starting the dynamic analysis]
+      end
+
       if setup_type == ""
         Dir.cd("../")
       end

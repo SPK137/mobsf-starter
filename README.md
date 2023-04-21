@@ -31,7 +31,7 @@ crystal run ./src/mobsf.cr -h
 
 ### Linux
 
-- After giving the binary permission to execute, simply run `./mobsf-installer --help to explore the commands`
+- After giving the binary permission to execute, simply run `./mobsf-installer --help` to explore the commands
 
 - For quick installation, run `./mobsf-installer setup --setup-type=all`
 
