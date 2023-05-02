@@ -52,13 +52,11 @@ module MobSFStarter
           exit
         end
 
-        opts.on "setup", "Setup MobSF" do
+        opts.on "setup", %[Setup type to perform [ static, all ] \n- Run "mobsf setup --setup-type=static" : install dependencies for static analysis\n- Run "mobsf setup --setup-type=all" : install dependencies for both static and dynamic analysis] do
           setup = true
           opts.banner = SETUP_BANNER
 
-          opts.on "-t SETUP_TYPE", "--setup-type=SETUP_TYPE",
-            "Setup type to perform [ static, all ] \n- static setup: install dependencies for static analysis \n- all setup: install dependencies for both static and dynamic analysis
-            " do |_setup_type|
+          opts.on "-t SETUP_TYPE", "--setup-type=SETUP_TYPE", %[Setup type to perform [ static, all ] \n- Run "mobsf setup --setup-type=static" : install dependencies for static analysis\n- Run "mobsf setup --setup-type=all" : install dependencies for both static and dynamic analysis] do |_setup_type|
             if _setup_type != InstallType::STATIC_ONLY && _setup_type != InstallType::WITH_DYNAMIC
               @stderr.puts "Invalid setup type: #{_setup_type}: [ static, all ]"
               exit 1
@@ -95,9 +93,12 @@ module MobSFStarter
 
         if setup
           if setup_type != InstallType::STATIC_ONLY && setup_type != InstallType::WITH_DYNAMIC
-            @stderr.puts "Please choose setup type: [ static, all ]"
-            @stderr.puts "For more information, run: mobsf-installer setup --help"
-            exit 1
+            @stdout.printf "Please choose setup type [ static, all ] : "
+            setup_type = @stdin.gets
+            if setup_type != InstallType::STATIC_ONLY && setup_type != InstallType::WITH_DYNAMIC
+              @stdout.puts "Please choose correct setup type."
+              exit 1
+            end
           end
 
           @stdout.puts %[======================================\n     Scandina Extension for MobSF     \n======================================]
