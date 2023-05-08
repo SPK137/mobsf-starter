@@ -28,7 +28,7 @@ module MobSFStarter
       STDOUT.puts "Fetching required packages..."
       STDOUT.puts "------------------------------------"
 
-      fetchZipStatus = Process.run("sudo apt-get -y install zip unzip curl openjdk-11-jdk", shell: true, input: STDIN, output: STDOUT, error: STDERR)
+      fetchZipStatus = Process.run("sudo apt-get -y install zip unzip curl openjdk-11-jdk adb", shell: true, input: STDIN, output: STDOUT, error: STDERR)
       raise Exception.new("Error installing MobSF depedencies : zip") unless fetchZipStatus.success?
 
       STDOUT.puts "------------------------------------"
